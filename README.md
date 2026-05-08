@@ -107,3 +107,43 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 - [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
 - [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
 - [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+
+## install docker
+- You need to install docker desktop
+## setup supabase
+
+1. Mac OS
+brew install supabase/tap/supabase
+
+2. Windows
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+
+3. Linux
+sudo apt update
+sudo apt install snapd
+sudo snap install supabase --classic
+
+4. Check version
+supabase --version
+
+5. Run
+npx supabase start
+
+6. Stop
+npx supabase stop
+
+NOTE: 
+If error occured:
+JSR package manifest for '@panva/jose' failed to load. Import 'https://jsr.io/@panva/jose/meta.json' failed: 403 Forbidden
+           at file:///root/index.ts:4:23
+
+- solution: Try to clean the environments
+
+supabase stop
+docker system prune -a 
+
+then start with stable version.
+
+npx supabase@2.69.0 start
+
