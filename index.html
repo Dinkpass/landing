@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DinkPass — Một thẻ. Chơi mọi nơi.</title>
+  <meta name="description" content="Một thẻ thành viên. Chơi pickleball không giới hạn tại các câu lạc bộ tốt nhất ở thành phố của bạn. Không phí gia nhập từng CLB. Chỉ việc chơi." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            display: ['Fraunces', 'ui-serif', 'Georgia'],
+          },
+          colors: {
+            ink: '#0B1411',
+            cream: '#F6F1E7',
+            lime: {
+              50:  '#F1FBE5',
+              100: '#E1F6C5',
+              300: '#B6E97A',
+              400: '#9DE054',
+              500: '#7FD13A',
+              600: '#5FB024',
+              700: '#3F7A18',
+            },
+            court: '#1F4E3D',
+          },
+          boxShadow: {
+            soft: '0 1px 0 rgba(0,0,0,0.04), 0 8px 30px -12px rgba(0,0,0,0.18)',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .display { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.02em; }
+    .grain {
+      background-image:
+        radial-gradient(rgba(11,20,17,0.06) 1px, transparent 1px),
+        radial-gradient(rgba(11,20,17,0.04) 1px, transparent 1px);
+      background-size: 18px 18px, 9px 9px;
+      background-position: 0 0, 9px 9px;
+    }
+    .court-pattern {
+      background: linear-gradient(135deg, #1F4E3D 0%, #143126 100%);
+      position: relative;
+    }
+    .court-pattern::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(transparent 49.5%, rgba(255,255,255,0.18) 49.5%, rgba(255,255,255,0.18) 50.5%, transparent 50.5%),
+        linear-gradient(90deg, transparent 49.5%, rgba(255,255,255,0.18) 49.5%, rgba(255,255,255,0.18) 50.5%, transparent 50.5%);
+      background-size: 100% 50%, 33.33% 100%;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 70%);
+    }
+    .marquee { mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    @keyframes scroll-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { animation: scroll-x 40s linear infinite; }
+  </style>
+</head>
+<body class="bg-cream text-ink antialiased">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-cream/80 border-b border-ink/5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <a href="#" class="flex items-center gap-2">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-lime-400 ring-2 ring-ink/10">
+          <svg viewBox="0 0 24 24" class="h-5 w-5 text-ink" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M5 9c5 4 9 4 14 0M5 15c5-4 9-4 14 0" />
+          </svg>
+        </span>
+        <span class="display text-2xl font-extrabold tracking-tight">DinkPass</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-ink/70">
+        <a href="#how" class="hover:text-ink" data-i18n="nav.how">Cách thức hoạt động</a>
+        <a href="#clubs" class="hover:text-ink" data-i18n="nav.clubs">Câu lạc bộ</a>
+        <a href="#pricing" class="hover:text-ink" data-i18n="nav.pricing">Bảng giá</a>
+        <a href="#partners" class="hover:text-ink" data-i18n="nav.partners">Dành cho CLB</a>
+        <a href="#faq" class="hover:text-ink" data-i18n="nav.faq">Câu hỏi</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <!-- Language toggle -->
+        <div class="hidden sm:flex items-center rounded-full bg-white ring-1 ring-ink/10 p-0.5 text-xs font-semibold">
+          <button data-lang="vi" class="lang-btn px-3 py-1.5 rounded-full transition">VI</button>
+          <button data-lang="en" class="lang-btn px-3 py-1.5 rounded-full transition">EN</button>
+        </div>
+        <a href="#waitlist" class="inline-flex items-center gap-1.5 rounded-full bg-ink text-cream px-4 py-2 text-sm font-semibold hover:bg-ink/90 transition">
+          <span data-i18n="nav.cta">Đăng ký sớm</span>
+          <svg viewBox="0 0 20 20" class="h-4 w-4" fill="currentColor"><path d="M7.5 4.5l5 5.5-5 5.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 grain opacity-60 pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 pt-20 pb-24 lg:pt-28 lg:pb-32 grid lg:grid-cols-12 gap-12 items-center relative">
+      <div class="lg:col-span-7">
+        <div class="inline-flex items-center gap-2 rounded-full bg-lime-100 text-lime-700 ring-1 ring-lime-300/60 px-3 py-1 text-xs font-semibold uppercase tracking-wider">
+          <span class="h-1.5 w-1.5 rounded-full bg-lime-500"></span>
+          <span data-i18n="hero.badge">Đang nhận thành viên sáng lập tại TP.HCM</span>
+        </div>
+        <h1 class="display mt-6 text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.95]">
+          <span data-i18n="hero.title1">Một thẻ.</span><br/>
+          <span class="relative inline-block">
+            <span class="relative z-10" data-i18n="hero.title2">Chơi mọi nơi.</span>
+            <span class="absolute left-0 right-0 bottom-1.5 h-3 bg-lime-300/80 -z-0 rounded"></span>
+          </span>
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-ink/70 max-w-xl leading-relaxed" data-i18n="hero.sub">
+          Khỏi phải đăng ký thành viên ở từng CLB. Với <strong>DinkPass</strong>, một gói duy nhất mở khóa giờ chơi không giới hạn tại các CLB pickleball tốt nhất TP.HCM — và sớm là cả Việt Nam.
+        </p>
+
+        <form id="waitlist" data-waitlist data-source="hero" class="mt-8 max-w-lg">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <label for="email" class="sr-only" data-i18n="form.emailLabel">Email</label>
+            <input id="email" name="email" type="email" required data-i18n-placeholder="form.emailPh" placeholder="email@cuaban.com"
+                   class="flex-1 rounded-full bg-white ring-1 ring-ink/10 focus:ring-2 focus:ring-lime-500 focus:outline-none px-5 py-3.5 text-base shadow-soft" />
+            <!-- honeypot for bots -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+            <button type="submit" class="rounded-full bg-ink text-cream px-6 py-3.5 text-base font-semibold hover:bg-ink/90 disabled:opacity-60 disabled:cursor-not-allowed transition" data-i18n="form.cta">
+              Nhận quyền truy cập sớm →
+            </button>
+          </div>
+          <div class="form-status mt-3 text-sm" role="status" aria-live="polite"></div>
+        </form>
+        <p class="mt-3 text-xs text-ink/50" data-i18n="hero.note">Thành viên sáng lập được <span class="font-semibold text-ink/70">giảm 50% trọn đời</span>. Chưa cần thẻ thanh toán.</p>
+
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-ink/60">
+          <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-lime-500"></span><span data-i18n="hero.f1">25+ CLB đối tác tại TP.HCM</span></div>
+          <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-lime-500"></span><span data-i18n="hero.f2">Sắp ra mắt: Hà Nội, Đà Nẵng</span></div>
+          <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-lime-500"></span><span data-i18n="hero.f3">Hủy bất cứ lúc nào</span></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 relative">
+        <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden ring-1 ring-ink/10 shadow-soft court-pattern">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-cream/90 px-8">
+              <div class="display text-7xl font-extrabold drop-shadow-sm">14&minus;6</div>
+              <div class="mt-2 uppercase tracking-[0.3em] text-xs" data-i18n="hero.match">Đang thi đấu</div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -left-6 top-10 hidden md:block bg-white rounded-2xl shadow-soft ring-1 ring-ink/10 p-4 w-64 rotate-[-4deg]">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-lime-300 flex items-center justify-center">
+              <svg viewBox="0 0 24 24" class="h-5 w-5 text-ink" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-xs text-ink/50" data-i18n="card.booked">Đã đặt</div>
+              <div class="text-sm font-semibold">Sân 3 · 18:30</div>
+            </div>
+          </div>
+          <div class="mt-3 text-xs text-ink/60">Thảo Điền Pickleball, Q.2</div>
+        </div>
+        <div class="absolute -right-4 bottom-12 hidden md:block bg-white rounded-2xl shadow-soft ring-1 ring-ink/10 p-4 w-72 rotate-[3deg]">
+          <div class="text-xs uppercase tracking-wider text-ink/50" data-i18n="card.month">Tháng này</div>
+          <div class="mt-1 display text-3xl font-extrabold"><span data-i18n="card.sessions">12 buổi chơi</span></div>
+          <div class="mt-1 text-xs text-ink/60" data-i18n="card.acrossClubs">tại 5 CLB khác nhau</div>
+          <div class="mt-3 flex -space-x-2">
+            <span class="h-7 w-7 rounded-full bg-lime-400 ring-2 ring-white"></span>
+            <span class="h-7 w-7 rounded-full bg-court ring-2 ring-white"></span>
+            <span class="h-7 w-7 rounded-full bg-orange-400 ring-2 ring-white"></span>
+            <span class="h-7 w-7 rounded-full bg-ink ring-2 ring-white"></span>
+            <span class="h-7 w-7 rounded-full bg-cream ring-2 ring-white text-[10px] font-semibold flex items-center justify-center text-ink">+1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-y border-ink/10 bg-white/60 py-5">
+      <div class="marquee overflow-hidden">
+        <div class="marquee-track flex gap-12 whitespace-nowrap text-ink/40 font-semibold tracking-wider uppercase text-sm">
+          <span>Thảo Điền Pickleball</span><span>·</span><span>An Phú Courts</span><span>·</span><span>Phú Mỹ Hưng PB</span><span>·</span>
+          <span>Sài Gòn Pickleball Club</span><span>·</span><span>Q7 Pickleball</span><span>·</span><span>Bình Thạnh Arena</span><span>·</span>
+          <span>Vinhomes Central</span><span>·</span><span>Crescent Mall Courts</span><span>·</span><span>Landmark Pickleball</span><span>·</span>
+          <span>Thảo Điền Pickleball</span><span>·</span><span>An Phú Courts</span><span>·</span><span>Phú Mỹ Hưng PB</span><span>·</span>
+          <span>Sài Gòn Pickleball Club</span><span>·</span><span>Q7 Pickleball</span><span>·</span><span>Bình Thạnh Arena</span><span>·</span>
+          <span>Vinhomes Central</span><span>·</span><span>Crescent Mall Courts</span><span>·</span><span>Landmark Pickleball</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft">
+        <div class="display text-5xl font-extrabold text-lime-600">300%</div>
+        <div class="mt-2 text-sm text-ink/60 leading-relaxed" data-i18n="stat.1">Tăng trưởng người chơi pickleball tại Việt Nam trong 12 tháng qua.</div>
+      </div>
+      <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft">
+        <div class="display text-5xl font-extrabold text-lime-600">0₫</div>
+        <div class="mt-2 text-sm text-ink/60 leading-relaxed" data-i18n="stat.2">Phí gia nhập tại mọi CLB đối tác. Đến nơi, quét mã, vào sân.</div>
+      </div>
+      <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft">
+        <div class="display text-5xl font-extrabold text-lime-600">25+</div>
+        <div class="mt-2 text-sm text-ink/60 leading-relaxed" data-i18n="stat.3">CLB đối tác tại TP.HCM khi ra mắt. Mỗi tuần thêm CLB mới.</div>
+      </div>
+      <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft">
+        <div class="display text-5xl font-extrabold text-lime-600">∞</div>
+        <div class="mt-2 text-sm text-ink/60 leading-relaxed" data-i18n="stat.4">Số buổi chơi không giới hạn mỗi tháng với gói City Pass.*</div>
+      </div>
+    </div>
+    <p class="mt-3 text-xs text-ink/40" data-i18n="stat.note">* Có giới hạn hợp lý theo từng CLB để đảm bảo công bằng cho tất cả thành viên.</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="bg-ink text-cream py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl">
+        <div class="text-lime-400 text-xs font-semibold uppercase tracking-[0.25em]" data-i18n="how.eyebrow">Cách thức</div>
+        <h2 class="display mt-3 text-4xl sm:text-5xl font-extrabold leading-tight" data-i18n="how.title">Ba bước từ ghế sofa ra sân đấu.</h2>
+      </div>
+      <div class="mt-14 grid md:grid-cols-3 gap-6">
+        <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 p-8 hover:bg-white/[0.07] transition">
+          <div class="display text-6xl font-extrabold text-lime-400">01</div>
+          <h3 class="mt-4 text-xl font-bold" data-i18n="how.s1.t">Chọn gói của bạn</h3>
+          <p class="mt-2 text-cream/70 text-sm leading-relaxed" data-i18n="how.s1.b">Day Pass nếu chỉ thử. City Pass cho người chơi thường xuyên ở TP.HCM. Đổi gói bất cứ lúc nào.</p>
+        </div>
+        <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 p-8 hover:bg-white/[0.07] transition">
+          <div class="display text-6xl font-extrabold text-lime-400">02</div>
+          <h3 class="mt-4 text-xl font-bold" data-i18n="how.s2.t">Đặt sân chỉ vài giây</h3>
+          <p class="mt-2 text-cream/70 text-sm leading-relaxed" data-i18n="how.s2.b">Xem lịch sân trống theo thời gian thực ở mọi CLB đối tác. Lọc theo trình độ, giờ, trong nhà/ngoài trời — đặt ngay trên app.</p>
+        </div>
+        <div class="rounded-3xl bg-white/5 ring-1 ring-white/10 p-8 hover:bg-white/[0.07] transition">
+          <div class="display text-6xl font-extrabold text-lime-400">03</div>
+          <h3 class="mt-4 text-xl font-bold" data-i18n="how.s3.t">Quét mã, vào sân</h3>
+          <p class="mt-2 text-cream/70 text-sm leading-relaxed" data-i18n="how.s3.b">Đến nơi, quét mã QR, vào sân. Không giấy tờ, không thẻ thành viên CLB, không quầy lễ tân lằng nhằng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLUBS / DISCOVERY -->
+  <section id="clubs" class="max-w-7xl mx-auto px-6 py-24">
+    <div class="grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-5">
+        <div class="text-lime-700 text-xs font-semibold uppercase tracking-[0.25em]" data-i18n="clubs.eyebrow">Khám phá</div>
+        <h2 class="display mt-3 text-4xl sm:text-5xl font-extrabold leading-tight" data-i18n="clubs.title">Các CLB tốt nhất, gói gọn trong một app.</h2>
+        <p class="mt-5 text-ink/70 leading-relaxed" data-i18n="clubs.body">Từ CLB indoor cao cấp ở Thảo Điền đến sân ngoài trời tại Phú Mỹ Hưng và các trung tâm thể thao tổ hợp — DinkPass tuyển chọn kỹ lưỡng. Mỗi CLB đối tác đều được kiểm duyệt về chất lượng sân, không khí và cơ hội đặt sân công bằng.</p>
+        <ul class="mt-8 space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-5 w-5 rounded-full bg-lime-400 flex items-center justify-center"><svg viewBox="0 0 20 20" class="h-3 w-3 text-ink" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 10l4 4 8-8"/></svg></span>
+            <div><div class="font-semibold" data-i18n="clubs.f1.t">Open play theo trình độ</div><div class="text-sm text-ink/60" data-i18n="clubs.f1.b">Phân nhóm theo DUPR — bạn chơi với người cùng level.</div></div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-5 w-5 rounded-full bg-lime-400 flex items-center justify-center"><svg viewBox="0 0 20 20" class="h-3 w-3 text-ink" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 10l4 4 8-8"/></svg></span>
+            <div><div class="font-semibold" data-i18n="clubs.f2.t">Chế độ du lịch</div><div class="text-sm text-ink/60" data-i18n="clubs.f2.b">Đi công tác Hà Nội hay nghỉ dưỡng Đà Nẵng? Thẻ vẫn dùng được khi mở rộng. Xem CLB đối tác trên bản đồ.</div></div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-5 w-5 rounded-full bg-lime-400 flex items-center justify-center"><svg viewBox="0 0 20 20" class="h-3 w-3 text-ink" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 10l4 4 8-8"/></svg></span>
+            <div><div class="font-semibold" data-i18n="clubs.f3.t">Mời bạn cùng chơi</div><div class="text-sm text-ink/60" data-i18n="clubs.f3.b">Hai lượt mời khách mỗi tháng, miễn phí, áp dụng cho mọi gói.</div></div>
+          </li>
+        </ul>
+      </div>
+      <div class="lg:col-span-7">
+        <div class="rounded-3xl bg-white ring-1 ring-ink/10 shadow-soft p-3 sm:p-5">
+          <div class="aspect-[4/3] rounded-2xl bg-gradient-to-br from-lime-100 via-white to-cream relative overflow-hidden">
+            <svg class="absolute inset-0 h-full w-full" viewBox="0 0 600 450" fill="none">
+              <defs>
+                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M30 0H0V30" stroke="rgba(11,20,17,0.05)" stroke-width="1"/>
+                </pattern>
+              </defs>
+              <rect width="600" height="450" fill="url(#grid)"/>
+              <path d="M40 320 Q160 240 280 290 T560 200" stroke="rgba(95,176,36,0.4)" stroke-width="3" fill="none" stroke-dasharray="6 6"/>
+            </svg>
+            <div class="absolute" style="left:18%; top:55%;"><div class="h-4 w-4 rounded-full bg-lime-500 ring-4 ring-lime-300/60 animate-pulse"></div></div>
+            <div class="absolute" style="left:38%; top:38%;"><div class="h-4 w-4 rounded-full bg-lime-500 ring-4 ring-lime-300/60"></div></div>
+            <div class="absolute" style="left:52%; top:62%;"><div class="h-4 w-4 rounded-full bg-lime-500 ring-4 ring-lime-300/60"></div></div>
+            <div class="absolute" style="left:70%; top:30%;"><div class="h-4 w-4 rounded-full bg-lime-500 ring-4 ring-lime-300/60"></div></div>
+            <div class="absolute" style="left:82%; top:50%;"><div class="h-4 w-4 rounded-full bg-ink ring-4 ring-lime-300"></div></div>
+
+            <div class="absolute right-4 bottom-4 bg-white/95 backdrop-blur rounded-xl p-3 shadow-soft ring-1 ring-ink/10 w-56">
+              <div class="text-xs text-ink/50" data-i18n="map.tonight">Tối nay gần bạn</div>
+              <div class="mt-1 font-semibold text-sm">Thảo Điền — Q.2</div>
+              <div class="text-xs text-ink/60" data-i18n="map.slot">Sân 4 · 19:00 · Open play 3.5+</div>
+              <button class="mt-3 w-full rounded-lg bg-ink text-cream text-xs font-semibold py-2" data-i18n="map.cta">Đặt miễn phí</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="bg-cream py-24 border-y border-ink/10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <div class="text-lime-700 text-xs font-semibold uppercase tracking-[0.25em]" data-i18n="price.eyebrow">Bảng giá</div>
+        <h2 class="display mt-3 text-4xl sm:text-5xl font-extrabold" data-i18n="price.title">Gói đơn giản. Chơi không giới hạn.</h2>
+        <p class="mt-4 text-ink/70" data-i18n="price.sub">Thành viên sáng lập được giảm 50% trọn đời. Hủy bất cứ lúc nào — vẫn dùng đến hết kỳ thanh toán.</p>
+      </div>
+      <div class="mt-14 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Day -->
+        <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft flex flex-col">
+          <div class="text-xs uppercase tracking-[0.2em] text-ink/50 font-semibold" data-i18n="price.day.title">Day Pass</div>
+          <div class="mt-4 flex items-baseline gap-1">
+            <span class="display text-5xl font-extrabold">199K₫</span>
+            <span class="text-ink/50 text-sm" data-i18n="price.day.unit">/ ngày</span>
+          </div>
+          <p class="mt-2 text-sm text-ink/60" data-i18n="price.day.desc">Du lịch ghé chơi hoặc dùng thử.</p>
+          <ul class="mt-6 space-y-2 text-sm text-ink/70 flex-1">
+            <li data-i18n="price.day.b1">• Chơi cả ngày tại bất kỳ CLB đối tác</li>
+            <li data-i18n="price.day.b2">• Bao gồm tất cả buổi open play</li>
+            <li data-i18n="price.day.b3">• Không thuê bao, không cam kết</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 rounded-full bg-cream ring-1 ring-ink/15 px-5 py-3 text-sm font-semibold text-ink text-center hover:bg-ink hover:text-cream transition" data-i18n="price.day.cta">Mua Day Pass</a>
+        </div>
+
+        <!-- City (popular) -->
+        <div class="relative rounded-3xl bg-ink text-cream p-8 shadow-soft flex flex-col ring-2 ring-lime-400">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-lime-400 text-ink text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full" data-i18n="price.popular">Phổ biến nhất</div>
+          <div class="text-xs uppercase tracking-[0.2em] text-lime-300 font-semibold" data-i18n="price.city.title">City Pass · TP.HCM</div>
+          <div class="mt-4 flex items-baseline gap-1">
+            <span class="display text-5xl font-extrabold">990K₫</span>
+            <span class="text-cream/60 text-sm" data-i18n="price.city.unit">/ tháng</span>
+          </div>
+          <p class="mt-2 text-sm text-cream/70" data-i18n="price.city.desc">Chơi không giới hạn trong nội thành TP.HCM.</p>
+          <ul class="mt-6 space-y-2 text-sm text-cream/80 flex-1">
+            <li data-i18n="price.city.b1">• Open play không giới hạn tại 25+ CLB</li>
+            <li data-i18n="price.city.b2">• Đặt sân trước 7 ngày</li>
+            <li data-i18n="price.city.b3">• 2 lượt mời khách / tháng</li>
+            <li data-i18n="price.city.b4">• Open play phân theo trình độ (DUPR)</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 rounded-full bg-lime-400 hover:bg-lime-300 text-ink px-5 py-3 text-sm font-semibold text-center transition" data-i18n="price.city.cta">Bắt đầu City Pass</a>
+        </div>
+
+        <!-- Vietnam Pass -->
+        <div class="rounded-3xl bg-white ring-1 ring-ink/10 p-8 shadow-soft flex flex-col">
+          <div class="text-xs uppercase tracking-[0.2em] text-ink/50 font-semibold" data-i18n="price.vn.title">Vietnam Pass</div>
+          <div class="mt-4 flex items-baseline gap-1">
+            <span class="display text-5xl font-extrabold">1.690K₫</span>
+            <span class="text-ink/50 text-sm" data-i18n="price.vn.unit">/ tháng</span>
+          </div>
+          <p class="mt-2 text-sm text-ink/60" data-i18n="price.vn.desc">Đi nhiều thành phố? Sắp có mặt khắp Việt Nam.</p>
+          <ul class="mt-6 space-y-2 text-sm text-ink/70 flex-1">
+            <li data-i18n="price.vn.b1">• Mọi quyền lợi của City Pass</li>
+            <li data-i18n="price.vn.b2">• Hà Nội, Đà Nẵng (Q3 2026)</li>
+            <li data-i18n="price.vn.b3">• 4 lượt mời khách / tháng</li>
+            <li data-i18n="price.vn.b4">• Miễn phí thuê vợt và bóng</li>
+            <li data-i18n="price.vn.b5">• Giải đấu nội bộ thành viên</li>
+          </ul>
+          <a href="#waitlist" class="mt-6 rounded-full bg-cream ring-1 ring-ink/15 px-5 py-3 text-sm font-semibold text-ink text-center hover:bg-ink hover:text-cream transition" data-i18n="price.vn.cta">Đăng ký chờ</a>
+        </div>
+      </div>
+
+      <p class="mt-8 text-center text-xs text-ink/50" data-i18n="price.note">Tiết kiệm 2 tháng khi thanh toán năm. Giá đã bao gồm VAT.</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="max-w-5xl mx-auto px-6 py-24 text-center">
+    <svg viewBox="0 0 24 24" class="h-10 w-10 mx-auto text-lime-500" fill="currentColor"><path d="M7 7h4v4H7c0 3 2 4 4 4v2c-4 0-6-3-6-6V7zm10 0h4v4h-4c0 3 2 4 4 4v2c-4 0-6-3-6-6V7z"/></svg>
+    <p class="display mt-6 text-3xl sm:text-4xl font-bold leading-tight text-ink/90" data-i18n="quote.body">
+      "Trước đây mình giữ 3 thẻ CLB ở Q.2, Q.7 và Bình Thạnh. Giờ chỉ cần DinkPass — và mình chơi nhiều hơn bao giờ hết."
+    </p>
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <div class="h-10 w-10 rounded-full bg-lime-300"></div>
+      <div class="text-left">
+        <div class="font-semibold text-sm">Mai N.</div>
+        <div class="text-xs text-ink/50">DUPR 4.0 · TP.HCM</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR CLUBS -->
+  <section id="partners" class="bg-court text-cream py-24 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 court-pattern"></div>
+    <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="text-lime-300 text-xs font-semibold uppercase tracking-[0.25em]" data-i18n="op.eyebrow">Dành cho chủ CLB</div>
+        <h2 class="display mt-3 text-4xl sm:text-5xl font-extrabold leading-tight" data-i18n="op.title">Lấp đầy sân trống. Giữ thành viên hiện có.</h2>
+        <p class="mt-5 text-cream/80 leading-relaxed max-w-xl" data-i18n="op.body">DinkPass đưa người chơi mới đến giờ thấp điểm của bạn — không ảnh hưởng đến gói thành viên hiện hữu. Bạn được thanh toán theo lượt với mức giá do bạn quyết định. Chúng tôi lo phần marketing, thanh toán và check-in.</p>
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/15 p-5">
+            <div class="display text-3xl font-extrabold text-lime-300">+38%</div>
+            <div class="text-xs mt-1 text-cream/70" data-i18n="op.s1">tỉ lệ lấp sân giờ thấp điểm tại các CLB thử nghiệm</div>
+          </div>
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/15 p-5">
+            <div class="display text-3xl font-extrabold text-lime-300">0₫</div>
+            <div class="text-xs mt-1 text-cream/70" data-i18n="op.s2">phí khởi tạo. Không phí hàng tháng.</div>
+          </div>
+          <div class="rounded-2xl bg-white/10 ring-1 ring-white/15 p-5">
+            <div class="display text-3xl font-extrabold text-lime-300">7 <span data-i18n="op.s3unit">ngày</span></div>
+            <div class="text-xs mt-1 text-cream/70" data-i18n="op.s3">để tích hợp với hệ thống đặt sân của bạn</div>
+          </div>
+        </div>
+        <a href="#waitlist" class="mt-8 inline-flex items-center gap-2 rounded-full bg-lime-400 text-ink px-6 py-3 text-sm font-semibold hover:bg-lime-300 transition" data-i18n="op.cta">Trở thành đối tác →</a>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="rounded-3xl bg-white text-ink p-6 shadow-soft ring-1 ring-white/10">
+          <div class="flex items-center justify-between text-xs text-ink/50 uppercase tracking-wider">
+            <span data-i18n="op.dash">Bảng điều khiển CLB</span><span data-i18n="op.today">Hôm nay</span>
+          </div>
+          <div class="mt-3 grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-cream p-4">
+              <div class="text-xs text-ink/50" data-i18n="op.visits">Lượt DinkPass</div>
+              <div class="display text-3xl font-extrabold mt-1">42</div>
+            </div>
+            <div class="rounded-xl bg-cream p-4">
+              <div class="text-xs text-ink/50" data-i18n="op.payouts">Doanh thu</div>
+              <div class="display text-3xl font-extrabold mt-1">5.4M₫</div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-2">
+            <div class="flex items-center justify-between text-sm bg-cream rounded-lg px-3 py-2">
+              <span>18:00 · Sân 2</span><span class="font-semibold">+ 150K₫</span>
+            </div>
+            <div class="flex items-center justify-between text-sm bg-cream rounded-lg px-3 py-2">
+              <span>18:30 · Sân 4</span><span class="font-semibold">+ 120K₫</span>
+            </div>
+            <div class="flex items-center justify-between text-sm bg-cream rounded-lg px-3 py-2">
+              <span>19:00 · Sân 1</span><span class="font-semibold">+ 180K₫</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="max-w-4xl mx-auto px-6 py-24">
+    <div class="text-center">
+      <div class="text-lime-700 text-xs font-semibold uppercase tracking-[0.25em]" data-i18n="faq.eyebrow">Câu hỏi thường gặp</div>
+      <h2 class="display mt-3 text-4xl sm:text-5xl font-extrabold" data-i18n="faq.title">Câu hỏi</h2>
+    </div>
+    <div class="mt-12 divide-y divide-ink/10 rounded-3xl bg-white ring-1 ring-ink/10 shadow-soft">
+      <details class="group p-6" open>
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <span class="font-semibold" data-i18n="faq.q1">Tôi có cần đăng ký thành viên ở từng CLB không?</span>
+          <span class="ml-4 text-ink/40 group-open:rotate-45 transition">+</span>
+        </summary>
+        <p class="mt-3 text-sm text-ink/70" data-i18n="faq.a1">Không. Đó chính là điểm cốt lõi. Một thẻ DinkPass dùng được tại mọi CLB đối tác — không cần đăng ký riêng, không phí gia nhập, không bị tư vấn bán thẻ.</p>
+      </details>
+      <details class="group p-6">
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <span class="font-semibold" data-i18n="faq.q2">Có thật sự không giới hạn không?</span>
+          <span class="ml-4 text-ink/40 group-open:rotate-45 transition">+</span>
+        </summary>
+        <p class="mt-3 text-sm text-ink/70" data-i18n="faq.a2">Không giới hạn trong toàn mạng lưới — riêng từng CLB có giới hạn hợp lý (thường 4–8 lượt/tháng) để giữ sân luôn có chỗ cho mọi người. Đa số thành viên không bao giờ chạm đến giới hạn này.</p>
+      </details>
+      <details class="group p-6">
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <span class="font-semibold" data-i18n="faq.q3">Còn lớp học, giải đấu, league thì sao?</span>
+          <span class="ml-4 text-ink/40 group-open:rotate-45 transition">+</span>
+        </summary>
+        <p class="mt-3 text-sm text-ink/70" data-i18n="faq.a3">Open play đã bao gồm trong gói. Lớp học, league và giải đấu có thể đặt trên app với giá ưu đãi cho thành viên (giảm 10–20%).</p>
+      </details>
+      <details class="group p-6">
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <span class="font-semibold" data-i18n="faq.q4">Khi nào ra mắt? Ở đâu?</span>
+          <span class="ml-4 text-ink/40 group-open:rotate-45 transition">+</span>
+        </summary>
+        <p class="mt-3 text-sm text-ink/70" data-i18n="faq.a4">TP.HCM là thành phố ra mắt đầu tiên (Q3 2026), bắt đầu từ Q.2, Q.7, Bình Thạnh, Phú Mỹ Hưng. Hà Nội và Đà Nẵng dự kiến cuối 2026 — sau đó là Hải Phòng, Cần Thơ, Nha Trang.</p>
+      </details>
+      <details class="group p-6">
+        <summary class="flex items-center justify-between cursor-pointer list-none">
+          <span class="font-semibold" data-i18n="faq.q5">Tôi có thể tạm dừng hoặc hủy không?</span>
+          <span class="ml-4 text-ink/40 group-open:rotate-45 transition">+</span>
+        </summary>
+        <p class="mt-3 text-sm text-ink/70" data-i18n="faq.a5">Tạm dừng tối đa 3 tháng/năm. Hủy bất cứ lúc nào — vẫn dùng được đến hết kỳ thanh toán hiện tại.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="px-6 pb-24">
+    <div class="max-w-6xl mx-auto rounded-[2rem] bg-ink text-cream p-10 sm:p-16 relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-lime-400/20 blur-3xl"></div>
+      <div class="relative grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="display text-4xl sm:text-5xl font-extrabold leading-tight" data-i18n="cta.title">Đừng trả tiền để thuộc về một CLB.<br/>Hãy trả tiền để được chơi.</h2>
+          <p class="mt-4 text-cream/70 max-w-md" data-i18n="cta.body">Là một trong 1.000 thành viên sáng lập đầu tiên — giữ ưu đãi giảm 50% trọn đời.</p>
+        </div>
+        <form data-waitlist data-source="footer-cta" data-theme="dark" class="flex flex-col gap-3">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input name="email" type="email" required data-i18n-placeholder="cta.ph" placeholder="email@cuaban.com"
+                   class="flex-1 rounded-full bg-white/10 ring-1 ring-white/20 focus:ring-2 focus:ring-lime-400 focus:outline-none px-5 py-3.5 text-base text-cream placeholder:text-cream/40" />
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+            <button type="submit" class="rounded-full bg-lime-400 text-ink px-6 py-3.5 text-base font-semibold hover:bg-lime-300 disabled:opacity-60 disabled:cursor-not-allowed transition" data-i18n="cta.btn">Giữ chỗ của tôi</button>
+          </div>
+          <div class="form-status text-sm text-cream/80" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-ink/10 bg-cream">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-10 text-sm">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-lime-400 ring-2 ring-ink/10">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 text-ink" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M5 9c5 4 9 4 14 0M5 15c5-4 9-4 14 0" />
+            </svg>
+          </span>
+          <span class="display text-xl font-extrabold">DinkPass</span>
+        </div>
+        <p class="mt-4 text-ink/60" data-i18n="ft.tag">Một thẻ. Chơi mọi nơi.</p>
+      </div>
+      <div>
+        <div class="text-ink/40 text-xs uppercase tracking-wider font-semibold" data-i18n="ft.players">Người chơi</div>
+        <ul class="mt-3 space-y-2 text-ink/70">
+          <li><a href="#how" class="hover:text-ink" data-i18n="nav.how">Cách thức hoạt động</a></li>
+          <li><a href="#pricing" class="hover:text-ink" data-i18n="nav.pricing">Bảng giá</a></li>
+          <li><a href="#clubs" class="hover:text-ink" data-i18n="ft.find">Tìm CLB</a></li>
+          <li><a href="#faq" class="hover:text-ink" data-i18n="nav.faq">Câu hỏi</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-ink/40 text-xs uppercase tracking-wider font-semibold" data-i18n="ft.clubs">CLB</div>
+        <ul class="mt-3 space-y-2 text-ink/70">
+          <li><a href="#partners" class="hover:text-ink" data-i18n="ft.partner">Trở thành đối tác</a></li>
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.opLogin">Đăng nhập CLB</a></li>
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.press">Báo chí</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-ink/40 text-xs uppercase tracking-wider font-semibold" data-i18n="ft.company">Công ty</div>
+        <ul class="mt-3 space-y-2 text-ink/70">
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.about">Giới thiệu</a></li>
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.contact">Liên hệ</a></li>
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.terms">Điều khoản</a></li>
+          <li><a href="#" class="hover:text-ink" data-i18n="ft.privacy">Bảo mật</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-ink/10">
+      <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink/50">
+        <div data-i18n="ft.copy">© 2026 DinkPass Vietnam. Mọi quyền được bảo lưu.</div>
+        <div data-i18n="ft.made">Được tạo cho những người chỉ muốn ra sân.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- I18N -->
+  <script>
+    const I18N = {
+      vi: {
+        "nav.how": "Cách thức hoạt động",
+        "nav.clubs": "Câu lạc bộ",
+        "nav.pricing": "Bảng giá",
+        "nav.partners": "Dành cho CLB",
+        "nav.faq": "Câu hỏi",
+        "nav.cta": "Đăng ký sớm",
+
+        "hero.badge": "Đang nhận thành viên sáng lập tại TP.HCM",
+        "hero.title1": "Một thẻ.",
+        "hero.title2": "Chơi mọi nơi.",
+        "hero.sub": "Khỏi phải đăng ký thành viên ở từng CLB. Với <strong>DinkPass</strong>, một gói duy nhất mở khóa giờ chơi không giới hạn tại các CLB pickleball tốt nhất TP.HCM — và sớm là cả Việt Nam.",
+        "hero.note": "Thành viên sáng lập được <span class=\"font-semibold text-ink/70\">giảm 50% trọn đời</span>. Chưa cần thẻ thanh toán.",
+        "hero.f1": "25+ CLB đối tác tại TP.HCM",
+        "hero.f2": "Sắp ra mắt: Hà Nội, Đà Nẵng",
+        "hero.f3": "Hủy bất cứ lúc nào",
+        "hero.match": "Đang thi đấu",
+
+        "form.emailLabel": "Email",
+        "form.emailPh": "email@cuaban.com",
+        "form.cta": "Nhận quyền truy cập sớm →",
+        "form.loading": "Đang xử lý...",
+        "form.success": "Cảm ơn bạn! Bạn đã có trong danh sách chờ. Hãy kiểm tra email để xác nhận.",
+        "form.error": "Có lỗi xảy ra. Vui lòng thử lại sau.",
+        "form.invalidEmail": "Vui lòng nhập email hợp lệ.",
+        "form.demo": "Đăng ký nhận! (Chế độ demo — chưa cấu hình endpoint waitlist.)",
+
+        "card.booked": "Đã đặt",
+        "card.month": "Tháng này",
+        "card.sessions": "12 buổi chơi",
+        "card.acrossClubs": "tại 5 CLB khác nhau",
+
+        "stat.1": "Tăng trưởng người chơi pickleball tại Việt Nam trong 12 tháng qua.",
+        "stat.2": "Phí gia nhập tại mọi CLB đối tác. Đến nơi, quét mã, vào sân.",
+        "stat.3": "CLB đối tác tại TP.HCM khi ra mắt. Mỗi tuần thêm CLB mới.",
+        "stat.4": "Số buổi chơi không giới hạn mỗi tháng với gói City Pass.*",
+        "stat.note": "* Có giới hạn hợp lý theo từng CLB để đảm bảo công bằng cho tất cả thành viên.",
+
+        "how.eyebrow": "Cách thức",
+        "how.title": "Ba bước từ ghế sofa ra sân đấu.",
+        "how.s1.t": "Chọn gói của bạn",
+        "how.s1.b": "Day Pass nếu chỉ thử. City Pass cho người chơi thường xuyên ở TP.HCM. Đổi gói bất cứ lúc nào.",
+        "how.s2.t": "Đặt sân chỉ vài giây",
+        "how.s2.b": "Xem lịch sân trống theo thời gian thực ở mọi CLB đối tác. Lọc theo trình độ, giờ, trong nhà/ngoài trời — đặt ngay trên app.",
+        "how.s3.t": "Quét mã, vào sân",
+        "how.s3.b": "Đến nơi, quét mã QR, vào sân. Không giấy tờ, không thẻ thành viên CLB, không quầy lễ tân lằng nhằng.",
+
+        "clubs.eyebrow": "Khám phá",
+        "clubs.title": "Các CLB tốt nhất, gói gọn trong một app.",
+        "clubs.body": "Từ CLB indoor cao cấp ở Thảo Điền đến sân ngoài trời tại Phú Mỹ Hưng và các trung tâm thể thao tổ hợp — DinkPass tuyển chọn kỹ lưỡng. Mỗi CLB đối tác đều được kiểm duyệt về chất lượng sân, không khí và cơ hội đặt sân công bằng.",
+        "clubs.f1.t": "Open play theo trình độ",
+        "clubs.f1.b": "Phân nhóm theo DUPR — bạn chơi với người cùng level.",
+        "clubs.f2.t": "Chế độ du lịch",
+        "clubs.f2.b": "Đi công tác Hà Nội hay nghỉ dưỡng Đà Nẵng? Thẻ vẫn dùng được khi mở rộng. Xem CLB đối tác trên bản đồ.",
+        "clubs.f3.t": "Mời bạn cùng chơi",
+        "clubs.f3.b": "Hai lượt mời khách mỗi tháng, miễn phí, áp dụng cho mọi gói.",
+
+        "map.tonight": "Tối nay gần bạn",
+        "map.slot": "Sân 4 · 19:00 · Open play 3.5+",
+        "map.cta": "Đặt miễn phí",
+
+        "price.eyebrow": "Bảng giá",
+        "price.title": "Gói đơn giản. Chơi không giới hạn.",
+        "price.sub": "Thành viên sáng lập được giảm 50% trọn đời. Hủy bất cứ lúc nào — vẫn dùng đến hết kỳ thanh toán.",
+        "price.popular": "Phổ biến nhất",
+        "price.day.title": "Day Pass",
+        "price.day.unit": "/ ngày",
+        "price.day.desc": "Du lịch ghé chơi hoặc dùng thử.",
+        "price.day.b1": "• Chơi cả ngày tại bất kỳ CLB đối tác",
+        "price.day.b2": "• Bao gồm tất cả buổi open play",
+        "price.day.b3": "• Không thuê bao, không cam kết",
+        "price.day.cta": "Mua Day Pass",
+        "price.city.title": "City Pass · TP.HCM",
+        "price.city.unit": "/ tháng",
+        "price.city.desc": "Chơi không giới hạn trong nội thành TP.HCM.",
+        "price.city.b1": "• Open play không giới hạn tại 25+ CLB",
+        "price.city.b2": "• Đặt sân trước 7 ngày",
+        "price.city.b3": "• 2 lượt mời khách / tháng",
+        "price.city.b4": "• Open play phân theo trình độ (DUPR)",
+        "price.city.cta": "Bắt đầu City Pass",
+        "price.vn.title": "Vietnam Pass",
+        "price.vn.unit": "/ tháng",
+        "price.vn.desc": "Đi nhiều thành phố? Sắp có mặt khắp Việt Nam.",
+        "price.vn.b1": "• Mọi quyền lợi của City Pass",
+        "price.vn.b2": "• Hà Nội, Đà Nẵng (Q3 2026)",
+        "price.vn.b3": "• 4 lượt mời khách / tháng",
+        "price.vn.b4": "• Miễn phí thuê vợt và bóng",
+        "price.vn.b5": "• Giải đấu nội bộ thành viên",
+        "price.vn.cta": "Đăng ký chờ",
+        "price.note": "Tiết kiệm 2 tháng khi thanh toán năm. Giá đã bao gồm VAT.",
+
+        "quote.body": "\"Trước đây mình giữ 3 thẻ CLB ở Q.2, Q.7 và Bình Thạnh. Giờ chỉ cần DinkPass — và mình chơi nhiều hơn bao giờ hết.\"",
+
+        "op.eyebrow": "Dành cho chủ CLB",
+        "op.title": "Lấp đầy sân trống. Giữ thành viên hiện có.",
+        "op.body": "DinkPass đưa người chơi mới đến giờ thấp điểm của bạn — không ảnh hưởng đến gói thành viên hiện hữu. Bạn được thanh toán theo lượt với mức giá do bạn quyết định. Chúng tôi lo phần marketing, thanh toán và check-in.",
+        "op.s1": "tỉ lệ lấp sân giờ thấp điểm tại các CLB thử nghiệm",
+        "op.s2": "phí khởi tạo. Không phí hàng tháng.",
+        "op.s3": "để tích hợp với hệ thống đặt sân của bạn",
+        "op.s3unit": "ngày",
+        "op.cta": "Trở thành đối tác →",
+        "op.dash": "Bảng điều khiển CLB",
+        "op.today": "Hôm nay",
+        "op.visits": "Lượt DinkPass",
+        "op.payouts": "Doanh thu",
+
+        "faq.eyebrow": "Câu hỏi thường gặp",
+        "faq.title": "Câu hỏi",
+        "faq.q1": "Tôi có cần đăng ký thành viên ở từng CLB không?",
+        "faq.a1": "Không. Đó chính là điểm cốt lõi. Một thẻ DinkPass dùng được tại mọi CLB đối tác — không cần đăng ký riêng, không phí gia nhập, không bị tư vấn bán thẻ.",
+        "faq.q2": "Có thật sự không giới hạn không?",
+        "faq.a2": "Không giới hạn trong toàn mạng lưới — riêng từng CLB có giới hạn hợp lý (thường 4–8 lượt/tháng) để giữ sân luôn có chỗ cho mọi người. Đa số thành viên không bao giờ chạm đến giới hạn này.",
+        "faq.q3": "Còn lớp học, giải đấu, league thì sao?",
+        "faq.a3": "Open play đã bao gồm trong gói. Lớp học, league và giải đấu có thể đặt trên app với giá ưu đãi cho thành viên (giảm 10–20%).",
+        "faq.q4": "Khi nào ra mắt? Ở đâu?",
+        "faq.a4": "TP.HCM là thành phố ra mắt đầu tiên (Q3 2026), bắt đầu từ Q.2, Q.7, Bình Thạnh, Phú Mỹ Hưng. Hà Nội và Đà Nẵng dự kiến cuối 2026 — sau đó là Hải Phòng, Cần Thơ, Nha Trang.",
+        "faq.q5": "Tôi có thể tạm dừng hoặc hủy không?",
+        "faq.a5": "Tạm dừng tối đa 3 tháng/năm. Hủy bất cứ lúc nào — vẫn dùng được đến hết kỳ thanh toán hiện tại.",
+
+        "cta.title": "Đừng trả tiền để thuộc về một CLB.<br/>Hãy trả tiền để được chơi.",
+        "cta.body": "Là một trong 1.000 thành viên sáng lập đầu tiên — giữ ưu đãi giảm 50% trọn đời.",
+        "cta.ph": "email@cuaban.com",
+        "cta.btn": "Giữ chỗ của tôi",
+
+        "ft.tag": "Một thẻ. Chơi mọi nơi.",
+        "ft.players": "Người chơi",
+        "ft.clubs": "CLB",
+        "ft.company": "Công ty",
+        "ft.find": "Tìm CLB",
+        "ft.partner": "Trở thành đối tác",
+        "ft.opLogin": "Đăng nhập CLB",
+        "ft.press": "Báo chí",
+        "ft.about": "Giới thiệu",
+        "ft.contact": "Liên hệ",
+        "ft.terms": "Điều khoản",
+        "ft.privacy": "Bảo mật",
+        "ft.copy": "© 2026 DinkPass Vietnam. Mọi quyền được bảo lưu.",
+        "ft.made": "Được tạo cho những người chỉ muốn ra sân."
+      },
+      en: {
+        "nav.how": "How it works",
+        "nav.clubs": "Clubs",
+        "nav.pricing": "Pricing",
+        "nav.partners": "For clubs",
+        "nav.faq": "FAQ",
+        "nav.cta": "Join the waitlist",
+
+        "hero.badge": "Now booking founding members in HCMC",
+        "hero.title1": "One pass.",
+        "hero.title2": "Play anywhere.",
+        "hero.sub": "Skip the membership at every club. With <strong>DinkPass</strong>, one subscription unlocks unlimited open play at the best pickleball clubs in Ho Chi Minh City — and soon, all of Vietnam.",
+        "hero.note": "Founding members lock in <span class=\"font-semibold text-ink/70\">50% off for life</span>. No card required.",
+        "hero.f1": "25+ partner clubs in HCMC",
+        "hero.f2": "Coming soon: Hanoi, Da Nang",
+        "hero.f3": "Cancel anytime",
+        "hero.match": "Match in progress",
+
+        "form.emailLabel": "Email",
+        "form.emailPh": "you@email.com",
+        "form.cta": "Get early access →",
+        "form.loading": "Submitting...",
+        "form.success": "Thanks! You're on the list. Check your email to confirm.",
+        "form.error": "Something went wrong. Please try again.",
+        "form.invalidEmail": "Please enter a valid email.",
+        "form.demo": "Got it! (Demo mode — waitlist endpoint not configured yet.)",
+
+        "card.booked": "Booked",
+        "card.month": "This month",
+        "card.sessions": "12 sessions",
+        "card.acrossClubs": "across 5 different clubs",
+
+        "stat.1": "Growth in pickleball players across Vietnam in the past 12 months.",
+        "stat.2": "Sign-up fees at any partner club. Show up, scan, play.",
+        "stat.3": "Partner clubs in HCMC at launch. Growing weekly.",
+        "stat.4": "Open play sessions per month on the City Pass.*",
+        "stat.note": "* Reasonable fair-use limits per club to keep play available for everyone.",
+
+        "how.eyebrow": "How it works",
+        "how.title": "Three steps from couch to court.",
+        "how.s1.t": "Pick your pass",
+        "how.s1.b": "Day Pass to try it. City Pass for regulars in HCMC. Switch anytime.",
+        "how.s2.t": "Book in seconds",
+        "how.s2.b": "Real-time availability across every partner club. Filter by skill, time, indoor/outdoor — book in the app.",
+        "how.s3.t": "Scan & play",
+        "how.s3.b": "Walk in, scan your QR pass, hit the court. No paperwork, no club membership, no awkward kiosk.",
+
+        "clubs.eyebrow": "Discover",
+        "clubs.title": "The best clubs, all in one app.",
+        "clubs.body": "From boutique indoor facilities in Thao Dien to outdoor courts in Phu My Hung and full-service complexes — DinkPass is curated, not crowded. Every club is vetted for quality, vibe, and fair court access.",
+        "clubs.f1.t": "Skill-rated open play",
+        "clubs.f1.b": "DUPR-aware sessions so you're matched with players at your level.",
+        "clubs.f2.t": "Travel mode",
+        "clubs.f2.b": "Business trip to Hanoi? Beach weekend in Da Nang? Your pass works there too as we expand. See partner clubs on the map.",
+        "clubs.f3.t": "Bring a guest",
+        "clubs.f3.b": "Two guest passes per month included on every plan.",
+
+        "map.tonight": "Tonight near you",
+        "map.slot": "Court 4 · 7:00 PM · 3.5+ open play",
+        "map.cta": "Reserve free",
+
+        "price.eyebrow": "Pricing",
+        "price.title": "Simple plans. Unlimited play.",
+        "price.sub": "Founding members get 50% off for life. Cancel anytime — keep playing through the end of the month.",
+        "price.popular": "Most popular",
+        "price.day.title": "Day Pass",
+        "price.day.unit": "/ day",
+        "price.day.desc": "Visiting town or testing it out.",
+        "price.day.b1": "• 24-hour access at any partner club",
+        "price.day.b2": "• All open play sessions included",
+        "price.day.b3": "• No subscription, no commitment",
+        "price.day.cta": "Get a Day Pass",
+        "price.city.title": "City Pass · HCMC",
+        "price.city.unit": "/ month",
+        "price.city.desc": "Unlimited play across Ho Chi Minh City.",
+        "price.city.b1": "• Unlimited open play at 25+ clubs",
+        "price.city.b2": "• Priority booking 7 days out",
+        "price.city.b3": "• 2 guest passes / month",
+        "price.city.b4": "• Skill-matched sessions (DUPR)",
+        "price.city.cta": "Start City Pass",
+        "price.vn.title": "Vietnam Pass",
+        "price.vn.unit": "/ month",
+        "price.vn.desc": "Travel? Relocating? Soon, every major city in Vietnam.",
+        "price.vn.b1": "• Everything in City Pass",
+        "price.vn.b2": "• Hanoi, Da Nang (Q3 2026)",
+        "price.vn.b3": "• 4 guest passes / month",
+        "price.vn.b4": "• Free paddle & ball rentals",
+        "price.vn.b5": "• Member-only tournaments",
+        "price.vn.cta": "Join the waitlist",
+        "price.note": "Save 2 months when you pay annually. Prices include VAT.",
+
+        "quote.body": "\"I used to keep three different club memberships in District 2, District 7, and Binh Thanh. Now I just have DinkPass — and I play more than ever.\"",
+
+        "op.eyebrow": "For club owners",
+        "op.title": "Fill empty courts. Keep your members.",
+        "op.body": "DinkPass routes new players to your off-peak slots without touching your existing membership business. You get paid per visit at a rate you control — and we handle marketing, payments, and check-in.",
+        "op.s1": "avg off-peak utilization in pilot clubs",
+        "op.s2": "setup. No monthly fees. Ever.",
+        "op.s3": "to integrate with your booking system",
+        "op.s3unit": "days",
+        "op.cta": "Partner with DinkPass →",
+        "op.dash": "Club dashboard",
+        "op.today": "Today",
+        "op.visits": "DinkPass visits",
+        "op.payouts": "Payouts",
+
+        "faq.eyebrow": "Common questions",
+        "faq.title": "FAQ",
+        "faq.q1": "Do I have to become a member at each club?",
+        "faq.a1": "Nope. That's the whole point. One DinkPass works at every partner club — no separate signup, no initiation fees, no awkward sales pitch.",
+        "faq.q2": "Is it actually unlimited?",
+        "faq.a2": "Unlimited across the network — we apply fair-use limits per individual club (typically 4–8 visits/month) so courts stay available for everyone. Most members never come close.",
+        "faq.q3": "What about lessons, leagues, and tournaments?",
+        "faq.a3": "Open play is included. Lessons, leagues, and tournaments are bookable in-app at member rates (typically 10–20% off).",
+        "faq.q4": "When does it launch? Where?",
+        "faq.a4": "HCMC launches first (Q3 2026), starting in District 2, District 7, Binh Thanh, and Phu My Hung. Hanoi and Da Nang are planned for late 2026 — followed by Hai Phong, Can Tho, and Nha Trang.",
+        "faq.q5": "Can I pause or cancel?",
+        "faq.a5": "Pause for up to 3 months/year. Cancel anytime — you keep access through the end of your billing cycle.",
+
+        "cta.title": "Stop paying to belong.<br/>Start paying to play.",
+        "cta.body": "Be one of our first 1,000 founding members and lock in 50% off for life.",
+        "cta.ph": "you@email.com",
+        "cta.btn": "Claim my spot",
+
+        "ft.tag": "One pass. Play anywhere.",
+        "ft.players": "Players",
+        "ft.clubs": "Clubs",
+        "ft.company": "Company",
+        "ft.find": "Find a club",
+        "ft.partner": "Become a partner",
+        "ft.opLogin": "Operator login",
+        "ft.press": "Press kit",
+        "ft.about": "About",
+        "ft.contact": "Contact",
+        "ft.terms": "Terms",
+        "ft.privacy": "Privacy",
+        "ft.copy": "© 2026 DinkPass Vietnam. All rights reserved.",
+        "ft.made": "Made for people who'd rather be on a court."
+      }
+    };
+
+    function setLang(lang) {
+      const dict = I18N[lang];
+      if (!dict) return;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+      });
+      document.title = lang === 'vi'
+        ? 'DinkPass — Một thẻ. Chơi mọi nơi.'
+        : 'DinkPass — One pass. Play anywhere.';
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        const active = b.getAttribute('data-lang') === lang;
+        b.classList.toggle('bg-ink', active);
+        b.classList.toggle('text-cream', active);
+        b.classList.toggle('text-ink/60', !active);
+      });
+      try { localStorage.setItem('dinkpass-lang', lang); } catch (_) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let initial = 'vi';
+      try {
+        const saved = localStorage.getItem('dinkpass-lang');
+        if (saved === 'vi' || saved === 'en') initial = saved;
+        else if ((navigator.language || '').toLowerCase().startsWith('en')) initial = 'en';
+      } catch (_) {}
+      setLang(initial);
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+      });
+    });
+  </script>
+
+  <!-- WAITLIST FORM -->
+  <script>
+    /**
+     * Waitlist configuration.
+     * To go live, replace WAITLIST_ENDPOINT with your real endpoint.
+     *
+     * Recommended providers (no backend required):
+     *   - Formspree:  https://formspree.io/f/YOUR_FORM_ID
+     *   - FormSubmit: https://formsubmit.co/your-email@example.com  (no signup)
+     *   - Web3Forms:  https://api.web3forms.com/submit  (use access_key field)
+     *
+     * Until configured, the form runs in DEMO mode: it validates email,
+     * stores the address in localStorage, and shows the success message.
+     */
+    const WAITLIST_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+    function getStrings() {
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'vi';
+      return I18N[lang] || I18N.vi;
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || '').trim());
+    }
+
+    function showStatus(form, type, message) {
+      const status = form.querySelector('.form-status');
+      if (!status) return;
+      const isDark = form.dataset.theme === 'dark';
+      const palette = {
+        loading: isDark ? 'text-cream/70' : 'text-ink/60',
+        success: isDark ? 'text-lime-300' : 'text-lime-700',
+        error:   isDark ? 'text-red-300' : 'text-red-600',
+        info:    isDark ? 'text-cream/80' : 'text-ink/70',
+      };
+      status.className = 'form-status mt-3 text-sm ' + (palette[type] || palette.info);
+      status.textContent = message;
+    }
+
+    function setSubmitting(form, submitting) {
+      const btn = form.querySelector('button[type=submit]');
+      if (!btn) return;
+      btn.disabled = submitting;
+      if (submitting) {
+        btn.dataset.originalLabel = btn.dataset.originalLabel || btn.textContent;
+        btn.textContent = getStrings()['form.loading'] || 'Submitting...';
+      } else if (btn.dataset.originalLabel) {
+        btn.textContent = btn.dataset.originalLabel;
+      }
+    }
+
+    function rememberLocally(email, source) {
+      try {
+        const list = JSON.parse(localStorage.getItem('dinkpass-waitlist') || '[]');
+        list.push({ email, source, lang: document.documentElement.lang, at: new Date().toISOString() });
+        localStorage.setItem('dinkpass-waitlist', JSON.stringify(list));
+      } catch (_) {}
+    }
+
+    async function handleWaitlistSubmit(e) {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const strings = getStrings();
+      const honeypot = form.querySelector('input[name=_gotcha]');
+      if (honeypot && honeypot.value) return; // bot
+
+      const emailInput = form.querySelector('input[type=email]');
+      const email = (emailInput && emailInput.value || '').trim();
+
+      if (!isValidEmail(email)) {
+        showStatus(form, 'error', strings['form.invalidEmail']);
+        emailInput && emailInput.focus();
+        return;
+      }
+
+      setSubmitting(form, true);
+      showStatus(form, 'loading', strings['form.loading']);
+
+      const source = form.dataset.source || 'unknown';
+      const lang = document.documentElement.lang || 'vi';
+      const isDemo = !WAITLIST_ENDPOINT || WAITLIST_ENDPOINT.includes('YOUR_FORM_ID');
+
+      // Always keep a local copy as fallback / debugging aid.
+      rememberLocally(email, source);
+
+      if (isDemo) {
+        // No real endpoint configured — simulate success.
+        await new Promise(r => setTimeout(r, 600));
+        setSubmitting(form, false);
+        showStatus(form, 'success', strings['form.demo']);
+        form.reset();
+        return;
+      }
+
+      try {
+        const res = await fetch(WAITLIST_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        });
+        if (res.ok) {
+          showStatus(form, 'success', strings['form.success']);
+          form.reset();
+        } else {
+          showStatus(form, 'error', strings['form.error']);
+        }
+      } catch (err) {
+        showStatus(form, 'error', strings['form.error']);
+      } finally {
+        setSubmitting(form, false);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('form[data-waitlist]').forEach(form => {
+        form.addEventListener('submit', handleWaitlistSubmit);
+      });
+    });
+  </script>
+
+</body>
+</html>
