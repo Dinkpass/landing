@@ -2,7 +2,7 @@
 
 > **Một thẻ. Chơi mọi nơi.** · One pass. Play anywhere.
 
-The membership for people who don't want a membership. One subscription unlocks unlimited pickleball at the best clubs in your city — starting in **Ho Chi Minh City**, expanding across Vietnam.
+The membership for people who don't want a membership. One subscription unlocks unlimited pickleball at the best clubs in your city — starting in **Đà Nẵng**, expanding across Vietnam.
 
 ---
 
@@ -92,19 +92,19 @@ See [`.claude/brand-voice-guidelines.md`](.claude/brand-voice-guidelines.md) for
 
 | Phase | Cities | Timing |
 |---|---|---|
-| **MVP launch** | Ho Chi Minh City (Q.2, Q.7, Bình Thạnh, Phú Mỹ Hưng) | Q3 2026 |
-| **Phase 2** | Hà Nội, Đà Nẵng | Q4 2026 |
+| **MVP launch** | Đà Nẵng (Sơn Trà, Hải Châu, Ngũ Hành Sơn, Thanh Khê) | Q3 2026 |
+| **Phase 2** | Hà Nội, Ho Chi Minh City | Q4 2026 |
 | **Phase 3** | Hải Phòng, Cần Thơ, Nha Trang | 2027 |
 
 ## Pricing (launch)
 
 | Plan | Price | What you get |
 |---|---|---|
-| **Day Pass** | 199.000₫ / day | 24-hour access at any partner club |
-| **City Pass · TP.HCM** | 990.000₫ / month | Unlimited play across HCMC partner clubs |
-| **Vietnam Pass** | 1.690.000₫ / month | Multi-city access (as new cities launch) |
+| **Day Pass** | 99.000₫ / day | 24-hour access at any partner club |
+| **City Pass · Đà Nẵng** | 690.000₫ / month | Unlimited play across Đà Nẵng partner clubs |
+| **Vietnam Pass** | 1.190.000₫ / month | Multi-city access (as new cities launch) |
 
-Founding members lock in **50% off for life**.
+Founding members lock in **30% off for the first 12 months**.
 
 ## License
 

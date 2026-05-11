@@ -268,7 +268,7 @@ We sound like a player who built the thing they always wanted — not a SaaS com
 4. **Geographic emphasis at launch:** All 14 metros equally, or one anchor metro for messaging concentration?
 5. **Pickleball-specific vocabulary:** How heavily do we lean into in-group terms ("dink," "kitchen," "third shot drop")? Recommend: light flavor, never a barrier to non-players.
 6. **Imagery — DUPR partnership:** If we integrate DUPR for skill ratings, do we co-brand visually, or keep DUPR as a back-end utility?
-7. **Founding-member offer durability:** "50% off for life" is a strong promise — confirm with finance before scaling messaging.
+7. **Founding-member offer durability:** ✅ Resolved → switched from "50% off for life" to "30% off for the first 12 months" (protects long-term margin; still strong early-adopter signal).
 
 ---
 

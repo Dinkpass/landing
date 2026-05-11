@@ -8,7 +8,7 @@
 
 ## 1. Overview
 
-DinkPass is a court-booking and subscription platform for pickleball players in Ho Chi Minh City. A member buys a Day Pass or City Pass and books open-play slots at any partner club from a single app. Clubs publish availability via a simple admin and receive per-visit payouts.
+DinkPass is a court-booking and subscription platform for pickleball players in Đà Nẵng (launch city). A member buys a Day Pass or City Pass and books open-play slots at any partner club from a single app. Clubs publish availability via a simple admin and receive per-visit payouts.
 
 **MVP delivers** the smallest end-to-end loop:
 1. Member signs in with phone OTP
@@ -88,7 +88,7 @@ create table clubs (
   id            uuid primary key default gen_random_uuid(),
   name          text not null,
   slug          text unique not null,
-  district      text not null,                       -- 'Q.2', 'Q.7', 'Bình Thạnh', etc.
+  district      text not null,                       -- 'Sơn Trà', 'Hải Châu', 'Ngũ Hành Sơn', 'Thanh Khê', etc.
   address       text not null,
   location      geography(point, 4326),              -- PostGIS
   photos        text[] not null default '{}',
@@ -398,7 +398,7 @@ Store production secrets in Vercel + Supabase dashboards. **Never commit `.env.l
 
 ## 15. Performance budget
 
-- Largest Contentful Paint < 2.5 s on 4G in HCMC.
+- Largest Contentful Paint < 2.5 s on 4G in Đà Nẵng (Supabase + Vercel both in Singapore region — single-digit-ms hop from VN edge).
 - Server actions p95 < 400 ms.
 - Slot list render under 200 visible items uses virtualization (Tanstack Virtual).
 - Images: Next.js `<Image>` only; clubs upload max 1080p, served as AVIF/WebP.
@@ -450,7 +450,7 @@ A feature ships only when:
 ## 19. Out of scope for MVP
 
 - Native mobile app
-- Multi-city (HCMC only)
+- Multi-city (Đà Nẵng only)
 - DUPR integration
 - Lessons / leagues / tournaments
 - Guest passes

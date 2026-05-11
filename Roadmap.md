@@ -1,6 +1,6 @@
 # DinkPass — 3-Week Sprint Roadmap
 
-> **Goal by end of Week 3:** Live landing page collecting waitlist signups, 5–10 signed LOIs with HCMC partner clubs, and a working booking + payment flow demoed end-to-end with **one pilot club**.
+> **Goal by end of Week 3:** Live landing page collecting waitlist signups, 5–10 signed LOIs with **Đà Nẵng** partner clubs, and a working booking + payment flow demoed end-to-end with **one pilot club**.
 
 > **North-star metric for this window:** *Number of paid bookings completed by real users at a real partner club.* Target: ≥ 10.
 
@@ -13,12 +13,12 @@
 These unblock everything else. Don't start building before these are answered.
 
 - [ ] 🧭 **Brand name lock** — keep "DinkPass" or change?
-- [ ] 🧭 **Pilot district** — Q.2 (Thảo Điền) or Q.7 (Phú Mỹ Hưng) for first 5 clubs?
+- [x] 🧭 **Pilot district** — ✅ **Sơn Trà / An Hải** (highest cluster of clubs on the map, near My Khe Beach)
 - [ ] 🧭 **Payment gateway** — PayOS (recommended) vs. direct VNPAY+MoMo
 - [ ] 🧭 **Subscription model** — manual renewal (recommended for MVP) vs. card-on-file
 - [ ] 🧭 **Auth method** — phone OTP only vs. phone OTP + Google
 - [ ] 🧭 **MVP language** — VI-only (faster) vs. VI + EN (broader)
-- [ ] 🧭 **Pricing validation** — confirm 199K / 990K / 1.690K ₫ holds up after club conversations
+- [x] 🧭 **Pricing** — locked at **99K / 690K / 1.190K ₫** with **30 % off for 12 months** founding offer. Validate with first 5 club conversations and 20 player surveys; adjust if signal says low.
 - [ ] 🧭 **Legal entity** — using existing company or registering new VN entity for DinkPass?
 
 ---
@@ -28,7 +28,7 @@ These unblock everything else. Don't start building before these are answered.
 **Theme:** *Prove demand and lock the supply side. Engineering does setup only.*
 
 ### 🤝 Partnerships (the most important track)
-- [ ] 🤝 Build a target list of 20 HCMC partner clubs (indoor priority — Thảo Điền, Phú Mỹ Hưng, Bình Thạnh, Q.7)
+- [ ] 🤝 Build a target list of 20 Đà Nẵng partner clubs (priority: Sơn Trà / An Hải / Bắc Mỹ Phú clusters from the map — Duy King, San Pickleball Union, Pikaball, T-Army, Pickle Head Mỹ Khê, Happy Pickleball, Cosevco Thanh Khê, Riverpoint, GreenZone, AK Club, VQ Fitness, Zone 43)
 - [ ] 🤝 Draft a **1-page LOI** in Vietnamese: revenue share, exclusivity (none required), 90-day pilot terms
 - [ ] 🤝 Pitch 15+ clubs in person — target 8 verbal yeses, 5 signed LOIs by end of week
 - [ ] 🤝 Survey 20 active players: pricing willingness, top-3 clubs they'd want, frustration with current memberships
@@ -111,8 +111,8 @@ These unblock everything else. Don't start building before these are answered.
 - [ ] 🛠 PayOS payment-link generation on booking confirm
 - [ ] 🛠 PayOS webhook endpoint (HMAC verification, idempotent)
 - [ ] 🛠 Pay state machine: `pending → paid → confirmed` or `pending → expired → cancelled`
-- [ ] 🛠 Day Pass purchase flow (one-time, 199K ₫)
-- [ ] 🛠 City Pass purchase flow (manual renewal: 990K ₫ for 30 days)
+- [ ] 🛠 Day Pass purchase flow (one-time, 99K ₫)
+- [ ] 🛠 City Pass purchase flow (manual renewal: 690K ₫ for 30 days · 30 % off promo for founding members)
 - [ ] 🛠 Email receipts via Resend
 - [ ] 🛠 SMS booking confirmation via Hostinger or Twilio (just the QR code link)
 - [ ] 🛠 Cancel + refund flow (PayOS supports partial refunds)
