@@ -7,11 +7,13 @@
 
 ## 1. Executive summary
 
-**DinkPass** is a curated, single-subscription pickleball-court network for Vietnam. One pass — one price — unlimited play across the best partner clubs in Ho Chi Minh City, with planned expansion to Hà Nội and Đà Nẵng.
+**DinkPass** is a curated, single-subscription pickleball-court network for Vietnam. One pass — one price — unlimited play across the best partner clubs in **Đà Nẵng**, with planned expansion to Hà Nội and Ho Chi Minh City.
 
 We solve two pains at once:
-- **For players:** stop juggling memberships at 2–3 clubs to find a court near home or work.
+- **For players:** stop juggling memberships at 2–3 clubs to find a court near home, the beach, or work.
 - **For club operators:** monetize empty off-peak courts without diluting the existing membership business.
+
+**Why Đà Nẵng first:** small enough that 20 partner clubs covers the whole urban area; high density of indoor + outdoor courts; strong active-lifestyle culture among locals, expats, remote workers, and tourists. We prove the model in a contained market, then expand to Hà Nội and HCMC where city density and competition are higher.
 
 **Tagline:** *Một thẻ. Chơi mọi nơi.* / *One pass. Play anywhere.*
 
@@ -21,14 +23,14 @@ We solve two pains at once:
 
 ### What's broken today
 - Pickleball is the fastest-growing sport in Vietnam (300% YoY player growth in 2025).
-- New indoor and outdoor clubs are opening monthly across HCMC, but each one runs its own membership, its own booking system, and its own pricing.
+- New indoor and outdoor clubs are opening monthly across Đà Nẵng — over 20 visible on the map today — but each one runs its own membership, its own booking system, and its own pricing.
 - Active players (3+ sessions/week) frequently hold 2–3 separate memberships totaling 1.5–3 M ₫/month, plus drop-in fees on top.
 - Travelers and relocators have no good way to play in a new city without joining a new club.
 - Clubs themselves have idle off-peak inventory they can't fill.
 
 ### Why now
 - Player base in Vietnam is digitally native (avg age has dropped each year — 40 % under 35).
-- HCMC has reached the **density tipping point** where 25 + clubs sit within a 30-minute drive of any central district.
+- Đà Nẵng has reached the **density tipping point** for the sport — 20+ clubs sit within a 20-minute drive of any central district. Per capita that's higher density than HCMC.
 - Vietnamese payment rails (PayOS, MoMo, VNPAY) are mature enough to support seamless mobile checkout.
 - No incumbent: ClassPass doesn't operate in Vietnam; 365Dink (a US-based discount card) has zero presence.
 
@@ -57,10 +59,11 @@ A subscription that turns 25 + competing clubs into one product. Members pay Din
 
 | Segment | Profile | What they pay today | What DinkPass replaces |
 |---|---|---|---|
-| **Multi-club regular** (target) | Plays 3–6×/week, 28–45 yo, professional, lives in Q.2/Q.7/Bình Thạnh | 1.5–3 M ₫/mo across 2–3 club memberships + drop-ins | All memberships → 990 K ₫/mo City Pass |
-| **Frequent traveler** | Hà Nội-based but visits HCMC monthly; wants to play without re-registering | 200–400 K ₫/visit drop-in fees | Day Pass at 199 K ₫ or Vietnam Pass when launched |
+| **Multi-club regular** (target) | Plays 3–6×/week, 25–45 yo, professional or remote worker, lives in Sơn Trà / Hải Châu / Ngũ Hành Sơn | 1.5–3 M ₫/mo across 2–3 club memberships + drop-ins | All memberships → 990 K ₫/mo City Pass |
+| **Remote worker / digital nomad** | Long-stay foreigner or Vietnamese remote worker in Đà Nẵng; plays 2–4×/week | Drop-ins at multiple clubs near their stay | City Pass as lifestyle subscription |
+| **Frequent traveler** | Hà Nội or HCMC-based; visits Đà Nẵng monthly for work or beach weekends | 200–400 K ₫/visit drop-in fees | Day Pass at 199 K ₫; Vietnam Pass when their home city launches |
 | **Curious newcomer** | New to the sport, doesn't want to commit to a single club | Pays drop-in trials at 2–3 clubs | Day Pass for low-risk exploration |
-| **Visitor / expat** | In HCMC for business or vacation | Hotel concierge or asks Facebook groups | Day Pass; lifelong member if they relocate |
+| **Visitor / expat** | In Đà Nẵng for business, leisure, or short-stay | Hotel concierge or asks Facebook groups | Day Pass; converts to City Pass if they extend stay |
 
 ### 4.2 Clubs (supply side)
 
@@ -97,7 +100,7 @@ We **explicitly do not** target large chains (e.g., Picklr-style networks if the
 | Plan | Price (VND) | Entitlement |
 |---|---|---|
 | **Day Pass** | 199.000 ₫ / 24 h | One booking, any partner club |
-| **City Pass · TP.HCM** | 990.000 ₫ / month | Unlimited bookings in HCMC, fair-use cap (default 6 visits/club/month) |
+| **City Pass · Đà Nẵng** | 990.000 ₫ / month | Unlimited bookings in Đà Nẵng, fair-use cap (default 6 visits/club/month) |
 | **Vietnam Pass** *(post-MVP)* | 1.690.000 ₫ / month | All cities as they launch |
 
 **Founding-member offer:** 50 % off for life on City Pass (capped at first 1,000 members).
@@ -127,7 +130,7 @@ Per-visit payment to the club, **dynamically priced** based on:
 
 ## 7. Unit economics (City Pass)
 
-Assumptions (HCMC pilot):
+Assumptions (Đà Nẵng pilot):
 - ARPU: **990.000 ₫/mo** (50 % of founders pay full, 50 % at founder discount → blended ≈ 740 K ₫)
 - Avg visits/member/mo: **8** (validated against multi-club regulars in player survey)
 - Avg payout/visit: **130 K ₫**
@@ -146,25 +149,25 @@ We will publish a quarterly margin update internally and revise pricing if neede
 
 ---
 
-## 8. Go-to-market — HCMC pilot
+## 8. Go-to-market — Đà Nẵng pilot
 
 ### 8.1 Phase 1 — Anchor district (Weeks 1–6)
-- Lock 5–10 LOIs with **anchor clubs** in **one** target district (recommend Q.2 — Thảo Điền — for highest density of target customer)
+- Lock 5–10 LOIs with **anchor clubs** in **one** target district (recommend **Sơn Trà / An Hải** — highest cluster of pickleball clubs on the map and dense with target customers: locals, expats, remote workers near the beach)
 - Launch at 1 anchor club; expand to 5 within 30 days
-- Acquisition: founder's network, partner-club staff, on-site QR-code signage, Facebook groups, Zalo groups, IG ads
+- Acquisition: founder's network, partner-club staff, on-site QR-code signage, Đà Nẵng pickleball Facebook & Zalo groups, expat / remote-worker communities (Hoianian, Da Nang Expats), IG ads
 
 ### 8.2 Phase 2 — Expand district by district (Months 2–4)
-- Add Q.7 → Bình Thạnh → Q.1 → Q.3
-- 25 + partner clubs, 1,000 paying members
+- Add Hải Châu → Ngũ Hành Sơn → Thanh Khê → Liên Chiểu
+- 20 + partner clubs covering the urban core, 800 paying members
 
 ### 8.3 Phase 3 — National (Months 5–9)
 - Hà Nội launch
-- Đà Nẵng launch
+- Ho Chi Minh City launch
 - Vietnam Pass becomes purchasable
 
 ### 8.4 Acquisition channels (priority order)
 1. **In-club QR signage at partner facilities** — highest-intent, lowest-cost
-2. **Pickleball Facebook & Zalo groups** in HCMC
+2. **Pickleball Facebook & Zalo groups** in Đà Nẵng (and expat / digital-nomad groups)
 3. **Founder & advisor referrals** — first 100 members
 4. **Influencer micro-partnerships** (5–10 local players with 5–50K followers each)
 5. **Google + Meta ads** (only after CAC is measurable)
@@ -279,9 +282,9 @@ Anchor clubs in the first 30 days receive a **guaranteed minimum payout** (50 % 
 | Phase | Window | Goal |
 |---|---|---|
 | **Phase 0 — Validation** | Weeks 1–3 | LOIs + waitlist + working booking demo |
-| **Phase 1 — Pilot** | Weeks 4–12 | 1 → 25 partner clubs in HCMC; 250 paying members |
-| **Phase 2 — HCMC scale** | Months 4–6 | 50 + clubs; 1,500 paying members; gross margin > 25 % |
-| **Phase 3 — Multi-city** | Months 7–12 | Hà Nội, Đà Nẵng launch; Vietnam Pass live |
+| **Phase 1 — Pilot** | Weeks 4–12 | 1 → 20 partner clubs in Đà Nẵng; 250 paying members |
+| **Phase 2 — Đà Nẵng scale** | Months 4–6 | 30 + clubs (incl. Hội An radius); 1,000 paying members; gross margin > 25 % |
+| **Phase 3 — Multi-city** | Months 7–12 | Hà Nội, HCMC launch; Vietnam Pass live |
 | **Phase 4 — Adjacent revenue** | Year 2 | Lessons, leagues, tournaments, sponsorships |
 
 ---
@@ -296,14 +299,14 @@ DinkPass voice and visual identity are codified in [.claude/brand-voice-guidelin
 
 ### ✅ Locked
 - Brand: **DinkPass** (working)
-- Launch city: **Ho Chi Minh City**
+- Launch city: **Đà Nẵng**
+- Pilot district: **Sơn Trà / An Hải** (highest cluster of clubs on the map, dense target customers near the beach)
 - Tech stack: Next.js + Supabase + PayOS + Resend
 - Pricing tiers: 199 K / 990 K / 1.690 K ₫
 - Founding-member offer: 50 % off for life
 - MVP languages: Vietnamese (English optional)
 
 ### ⏳ Open (decide before Week 2)
-- Pilot district: Q.2 vs Q.7
 - Subscription renewal: manual (recommended) vs card-on-file
 - SMS provider: Stringee / eSMS / VietGuys
 - Legal entity: existing or new
