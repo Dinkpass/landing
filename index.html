@@ -872,11 +872,39 @@
   <script>
     /**
      * Waitlist configuration — Supabase REST insert.
-     * Table: public.waitlist (RLS: anon can INSERT only)
+     * Table: public.waitlist (RLS: anon can INSERT only, cannot SELECT)
+     *
+     * Two environments, selected by hostname:
+     *   - PRODUCTION (dinkpass.io / www.dinkpass.io) → "Dinkpass" project
+     *   - DEVELOPMENT (everywhere else, incl. localhost, *.github.io,
+     *     dev.dinkpass.io, file://) → "Dinkpass-dev" project
+     *
+     * Publishable keys are safe to ship in client code by design.
      */
-    const SUPABASE_URL = 'https://zzwegqmjitnkobvmbyrr.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_uDBlvL-uTkMIPu1JIgOwGA_GypO6N-8';
+    const ENVIRONMENTS = {
+      production: {
+        SUPABASE_URL: 'https://zzwegqmjitnkobvmbyrr.supabase.co',
+        SUPABASE_ANON_KEY: 'sb_publishable_uDBlvL-uTkMIPu1JIgOwGA_GypO6N-8',
+      },
+      development: {
+        SUPABASE_URL: 'https://yiyqwhiyvznvcqwtlmjw.supabase.co',
+        SUPABASE_ANON_KEY: 'sb_publishable_FGO-AnKx1DdM08Iw9N3yKg_hKWv1XTr',
+      },
+    };
+
+    const PROD_HOSTS = new Set(['dinkpass.io', 'www.dinkpass.io']);
+    const ENV_NAME = PROD_HOSTS.has(location.hostname) ? 'production' : 'development';
+    const ENV = ENVIRONMENTS[ENV_NAME];
+
+    const SUPABASE_URL = ENV.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
     const WAITLIST_ENDPOINT = SUPABASE_URL + '/rest/v1/waitlist';
+
+    // Tag the document so QA/devs can spot which env they're on.
+    document.documentElement.dataset.env = ENV_NAME;
+    if (ENV_NAME !== 'production') {
+      console.info('[DinkPass] Running in', ENV_NAME, '— Supabase:', SUPABASE_URL);
+    }
 
     function getStrings() {
       const lang = document.documentElement.lang === 'en' ? 'en' : 'vi';
@@ -991,5 +1019,18 @@
     });
   </script>
 
+  <!-- ENV BADGE (only visible outside production) -->
+  <div id="env-badge" hidden
+       class="fixed bottom-3 right-3 z-50 rounded-full bg-orange-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 shadow-soft ring-1 ring-orange-700/40">
+    DEV ENV
+  </div>
+  <script>
+    (function () {
+      if (document.documentElement.dataset.env && document.documentElement.dataset.env !== 'production') {
+        var b = document.getElementById('env-badge');
+        if (b) b.hidden = false;
+      }
+    })();
+  </script>
 </body>
 </html>
