@@ -59,9 +59,9 @@ A subscription that turns 25 + competing clubs into one product. Members pay Din
 
 | Segment | Profile | What they pay today | What DinkPass replaces |
 |---|---|---|---|
-| **Multi-club regular** (target) | Plays 3–6×/week, 25–45 yo, professional or remote worker, lives in Sơn Trà / Hải Châu / Ngũ Hành Sơn | 1.5–3 M ₫/mo across 2–3 club memberships + drop-ins | All memberships → 990 K ₫/mo City Pass |
+| **Multi-club regular** (target) | Plays 3–6×/week, 25–45 yo, professional or remote worker, lives in Sơn Trà / Hải Châu / Ngũ Hành Sơn | 1.5–3 M ₫/mo across 2–3 club memberships + drop-ins | All memberships → 690 K ₫/mo City Pass |
 | **Remote worker / digital nomad** | Long-stay foreigner or Vietnamese remote worker in Đà Nẵng; plays 2–4×/week | Drop-ins at multiple clubs near their stay | City Pass as lifestyle subscription |
-| **Frequent traveler** | Hà Nội or HCMC-based; visits Đà Nẵng monthly for work or beach weekends | 200–400 K ₫/visit drop-in fees | Day Pass at 199 K ₫; Vietnam Pass when their home city launches |
+| **Frequent traveler** | Hà Nội or HCMC-based; visits Đà Nẵng monthly for work or beach weekends | 200–400 K ₫/visit drop-in fees | Day Pass at 99 K ₫; Vietnam Pass when their home city launches |
 | **Curious newcomer** | New to the sport, doesn't want to commit to a single club | Pays drop-in trials at 2–3 clubs | Day Pass for low-risk exploration |
 | **Visitor / expat** | In Đà Nẵng for business, leisure, or short-stay | Hotel concierge or asks Facebook groups | Day Pass; converts to City Pass if they extend stay |
 
@@ -99,11 +99,13 @@ We **explicitly do not** target large chains (e.g., Picklr-style networks if the
 
 | Plan | Price (VND) | Entitlement |
 |---|---|---|
-| **Day Pass** | 199.000 ₫ / 24 h | One booking, any partner club |
-| **City Pass · Đà Nẵng** | 990.000 ₫ / month | Unlimited bookings in Đà Nẵng, fair-use cap (default 6 visits/club/month) |
-| **Vietnam Pass** *(post-MVP)* | 1.690.000 ₫ / month | All cities as they launch |
+| **Day Pass** | 99.000 ₫ / 24 h | One booking, any partner club |
+| **City Pass · Đà Nẵng** | 690.000 ₫ / month | Unlimited bookings in Đà Nẵng, fair-use cap (default 6 visits/club/month) |
+| **Vietnam Pass** *(post-MVP)* | 1.190.000 ₫ / month | All cities as they launch |
 
-**Founding-member offer:** 50 % off for life on City Pass (capped at first 1,000 members).
+**Founding-member offer:** **30 % off for the first 12 months** on City Pass (capped at first 1,000 members). After Month 12 the member rolls onto the standard rate — they can cancel at any time.
+
+**Why we changed the offer:** "50 % off for life" cratered long-term margin and was hard to reverse without burning trust. "30 % for 12 months" still gives a strong early-adopter signal, protects unit economics, and gives us a natural retention moment at the renewal.
 
 Annual prepay: pay-for-10, get-12 (≈ 17 % discount).
 
@@ -131,19 +133,22 @@ Per-visit payment to the club, **dynamically priced** based on:
 ## 7. Unit economics (City Pass)
 
 Assumptions (Đà Nẵng pilot):
-- ARPU: **990.000 ₫/mo** (50 % of founders pay full, 50 % at founder discount → blended ≈ 740 K ₫)
+- List price: **690.000 ₫/mo**
+- Blended ARPU: **~590 K ₫/mo** (mix of full-price + 30 %-off founding members)
 - Avg visits/member/mo: **8** (validated against multi-club regulars in player survey)
-- Avg payout/visit: **130 K ₫**
-- COGS = 8 × 130 K = **1.04 M ₫**
+- Avg payout/visit: **70 K ₫** (Đà Nẵng drop-in fees are 50–100 K; we pay 60–80 % during peak, less off-peak)
+- COGS = 8 × 70 K = **560 K ₫**
+- **Gross margin per member ≈ 30 K ₫ (5 %) at founder discount; ~130 K ₫ (19 %) at full price**
 
-That math is **upside-down** at face value, which is the central business problem to manage. Levers that fix it:
-1. Visit caps (per club + per network) → cap COGS at the long-tail
-2. Mix of high-frequency vs. occasional users (the dropoff is steep — same as gym subscriptions)
-3. Off-peak pricing (most use will land in peak, but enough can be steered to off-peak with notifications)
-4. Scale negotiation: as DinkPass member volume grows, club payout drops 5–10 % at each renewal cycle
-5. Upsell to Day Pass conversions for casual users instead of City Pass
+This is **positive but thin** — exactly what we want at this stage. The pricing is calibrated so that even our worst cohort (heavy users on founder discount) doesn't lose us money. Levers that improve margin from here:
 
-**Target by Month 6 of pilot:** Gross margin **30 %+** at City Pass cohort level.
+1. **Visit caps** (per club + per network) → cap COGS at the long-tail of super-heavy users
+2. **Frequency mix** — the dropoff is steep, same as gym subscriptions; ~30 % of subs play <4 ×/mo
+3. **Off-peak nudges** — push availability + reminders for off-peak slots where payout multiplier is 35–50 % of drop-in instead of 70–80 %
+4. **Scale negotiation** — as DinkPass volume grows, club payout share drops 5–10 % at each renewal
+5. **Day Pass conversions** for casual users (99 K, ~30 K margin per visit at full retail)
+
+**Target by Month 6 of pilot:** Blended gross margin **25 %+** at City Pass cohort level.
 
 We will publish a quarterly margin update internally and revise pricing if needed.
 
@@ -302,8 +307,8 @@ DinkPass voice and visual identity are codified in [.claude/brand-voice-guidelin
 - Launch city: **Đà Nẵng**
 - Pilot district: **Sơn Trà / An Hải** (highest cluster of clubs on the map, dense target customers near the beach)
 - Tech stack: Next.js + Supabase + PayOS + Resend
-- Pricing tiers: 199 K / 990 K / 1.690 K ₫
-- Founding-member offer: 50 % off for life
+- Pricing tiers: 99 K / 690 K / 1.190 K ₫
+- Founding-member offer: 30 % off for the first 12 months
 - MVP languages: Vietnamese (English optional)
 
 ### ⏳ Open (decide before Week 2)

@@ -18,7 +18,7 @@ These unblock everything else. Don't start building before these are answered.
 - [ ] 🧭 **Subscription model** — manual renewal (recommended for MVP) vs. card-on-file
 - [ ] 🧭 **Auth method** — phone OTP only vs. phone OTP + Google
 - [ ] 🧭 **MVP language** — VI-only (faster) vs. VI + EN (broader)
-- [ ] 🧭 **Pricing validation** — confirm 199K / 990K / 1.690K ₫ holds up after club conversations
+- [x] 🧭 **Pricing** — locked at **99K / 690K / 1.190K ₫** with **30 % off for 12 months** founding offer. Validate with first 5 club conversations and 20 player surveys; adjust if signal says low.
 - [ ] 🧭 **Legal entity** — using existing company or registering new VN entity for DinkPass?
 
 ---
@@ -111,8 +111,8 @@ These unblock everything else. Don't start building before these are answered.
 - [ ] 🛠 PayOS payment-link generation on booking confirm
 - [ ] 🛠 PayOS webhook endpoint (HMAC verification, idempotent)
 - [ ] 🛠 Pay state machine: `pending → paid → confirmed` or `pending → expired → cancelled`
-- [ ] 🛠 Day Pass purchase flow (one-time, 199K ₫)
-- [ ] 🛠 City Pass purchase flow (manual renewal: 990K ₫ for 30 days)
+- [ ] 🛠 Day Pass purchase flow (one-time, 99K ₫)
+- [ ] 🛠 City Pass purchase flow (manual renewal: 690K ₫ for 30 days · 30 % off promo for founding members)
 - [ ] 🛠 Email receipts via Resend
 - [ ] 🛠 SMS booking confirmation via Hostinger or Twilio (just the QR code link)
 - [ ] 🛠 Cancel + refund flow (PayOS supports partial refunds)

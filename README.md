@@ -100,11 +100,11 @@ See [`.claude/brand-voice-guidelines.md`](.claude/brand-voice-guidelines.md) for
 
 | Plan | Price | What you get |
 |---|---|---|
-| **Day Pass** | 199.000₫ / day | 24-hour access at any partner club |
-| **City Pass · Đà Nẵng** | 990.000₫ / month | Unlimited play across Đà Nẵng partner clubs |
-| **Vietnam Pass** | 1.690.000₫ / month | Multi-city access (as new cities launch) |
+| **Day Pass** | 99.000₫ / day | 24-hour access at any partner club |
+| **City Pass · Đà Nẵng** | 690.000₫ / month | Unlimited play across Đà Nẵng partner clubs |
+| **Vietnam Pass** | 1.190.000₫ / month | Multi-city access (as new cities launch) |
 
-Founding members lock in **50% off for life**.
+Founding members lock in **30% off for the first 12 months**.
 
 ## License
 
