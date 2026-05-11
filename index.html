@@ -577,7 +577,6 @@
         "form.success": "Cảm ơn bạn! Bạn đã có trong danh sách chờ. Hãy kiểm tra email để xác nhận.",
         "form.error": "Có lỗi xảy ra. Vui lòng thử lại sau.",
         "form.invalidEmail": "Vui lòng nhập email hợp lệ.",
-        "form.demo": "Đăng ký nhận! (Chế độ demo — chưa cấu hình endpoint waitlist.)",
 
         "card.booked": "Đã đặt",
         "card.month": "Tháng này",
@@ -716,7 +715,6 @@
         "form.success": "Thanks! You're on the list. Check your email to confirm.",
         "form.error": "Something went wrong. Please try again.",
         "form.invalidEmail": "Please enter a valid email.",
-        "form.demo": "Got it! (Demo mode — waitlist endpoint not configured yet.)",
 
         "card.booked": "Booked",
         "card.month": "This month",
@@ -873,18 +871,12 @@
   <!-- WAITLIST FORM -->
   <script>
     /**
-     * Waitlist configuration.
-     * To go live, replace WAITLIST_ENDPOINT with your real endpoint.
-     *
-     * Recommended providers (no backend required):
-     *   - Formspree:  https://formspree.io/f/YOUR_FORM_ID
-     *   - FormSubmit: https://formsubmit.co/your-email@example.com  (no signup)
-     *   - Web3Forms:  https://api.web3forms.com/submit  (use access_key field)
-     *
-     * Until configured, the form runs in DEMO mode: it validates email,
-     * stores the address in localStorage, and shows the success message.
+     * Waitlist configuration — Supabase REST insert.
+     * Table: public.waitlist (RLS: anon can INSERT only)
      */
-    const WAITLIST_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+    const SUPABASE_URL = 'https://zzwegqmjitnkobvmbyrr.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_uDBlvL-uTkMIPu1JIgOwGA_GypO6N-8';
+    const WAITLIST_ENDPOINT = SUPABASE_URL + '/rest/v1/waitlist';
 
     function getStrings() {
       const lang = document.documentElement.lang === 'en' ? 'en' : 'vi';
@@ -950,31 +942,40 @@
 
       const source = form.dataset.source || 'unknown';
       const lang = document.documentElement.lang || 'vi';
-      const isDemo = !WAITLIST_ENDPOINT || WAITLIST_ENDPOINT.includes('YOUR_FORM_ID');
 
-      // Always keep a local copy as fallback / debugging aid.
+      // Local copy as a safety net in case the network blows up.
       rememberLocally(email, source);
-
-      if (isDemo) {
-        // No real endpoint configured — simulate success.
-        await new Promise(r => setTimeout(r, 600));
-        setSubmitting(form, false);
-        showStatus(form, 'success', strings['form.demo']);
-        form.reset();
-        return;
-      }
 
       try {
         const res = await fetch(WAITLIST_ENDPOINT, {
           method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(form),
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            email: email,
+            source: source,
+            language: lang,
+            referrer: document.referrer || null,
+            user_agent: navigator.userAgent || null
+          }),
         });
+
         if (res.ok) {
           showStatus(form, 'success', strings['form.success']);
           form.reset();
         } else {
-          showStatus(form, 'error', strings['form.error']);
+          // 409 = duplicate email (we use a unique index on lower(email)).
+          // 23505 is Postgres unique_violation. Treat both as success UX.
+          let detail = '';
+          try { detail = (await res.clone().json()).message || ''; } catch (_) {}
+          const isDuplicate = res.status === 409 || /duplicate|unique/i.test(detail);
+          showStatus(form, isDuplicate ? 'success' : 'error',
+            isDuplicate ? strings['form.success'] : strings['form.error']);
+          if (isDuplicate) form.reset();
         }
       } catch (err) {
         showStatus(form, 'error', strings['form.error']);
